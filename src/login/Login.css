@@ -1,0 +1,16 @@
+.login-box-body {
+  width: 400px;
+  padding: 2em;
+  margin: 15% auto;
+  background-color: rgb(127, 219, 255);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.login-box-msg {
+  font-size: 1.5em;
+}
+.form-control {
+  height: 40px;
+}
+/* h1 {
+  text-align: center;
+} */
