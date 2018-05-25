@@ -1,45 +1,89 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Login.css';
 import { LinkContainer } from 'react-router-bootstrap';
+import Auth from '../../modules/Auth';
 
-const Login = () => {
-  return (
-    <div>
-      <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_name: '',
+      password: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-        <form>
-          <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="User Name" />
-            <span class="glyphicon glyphicon-envelope form-control-feedback" />
-          </div>
-          <div class="form-group has-feedback">
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Password"
-            />
-            <span class="glyphicon glyphicon-lock form-control-feedback" />
-          </div>
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(JSON.stringify(this.state));
+    fetch('http://envihcm.com/api/user/login', {
+      method: 'POST',
+      body: JSON.stringify(this.state),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(res => Auth.authenticateUser(res.id))
+      .catch(err => console.log(err.headers));
+  }
+  render() {
+    return (
+      <div>
+        <div className="login-box-body">
+          <p className="login-box-msg">Sign in</p>
 
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox" /> Remember Me
-            </label>
-          </div>
-          <LinkContainer to="/">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group has-feedback">
+              <input
+                name="user_name"
+                type="text"
+                className="form-control"
+                placeholder="User Name"
+                value={this.state.user_name}
+                onChange={this.handleChange}
+              />
+              <span className="glyphicon glyphicon-envelope form-control-feedback" />
+            </div>
+            <div className="form-group has-feedback">
+              <input
+                name="password"
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+              <span className="glyphicon glyphicon-lock form-control-feedback" />
+            </div>
+
+            <div className="checkbox icheck">
+              <label>
+                <input type="checkbox" /> Remember Me
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-primary btn-block btn-flat"
+            >
               Sign In
             </button>
-          </LinkContainer>
-        </form>
-        <br />
-        <p>
-          Problem with login? <a href="">Contact us</a>
-        </p>
+          </form>
+          <br />
+          <p>
+            Problem with login? <a>Contact us</a>
+          </p>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Login;
