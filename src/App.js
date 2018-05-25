@@ -5,7 +5,7 @@ import SideBar from './components/sidebar/SideBar';
 import Contact from './components/contact/Contact';
 import Login from './components/login/Login';
 import DataTable from './components/datatable/DataTable';
-import Auth from './modules/Auth';
+import { inject, observer } from 'mobx-react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,11 +13,11 @@ import {
   Redirect
 } from 'react-router-dom';
 
+@inject('AuthStore')
+@observer
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
+    const { isUserAuthenticated } = this.props.AuthStore;
     return (
       <Router>
         <Switch>
@@ -25,26 +25,33 @@ class App extends Component {
             exact
             path="/login"
             render={() =>
-              Auth.isUserAuthenticated() ? (
-                <Redirect to="/dashboard" />
-              ) : (
-                <Login />
-              )
+              isUserAuthenticated ? <Redirect to="/" /> : <Login />
             }
           />
-          <div className="wrapper">
-            <SideBar />
-            <Header />
-            <div className="content">
-              <Redirect from="/" to="/dashboard" />
-              <Route exact path="/datatable" component={DataTable} />
-              <Route exact path="/contact" component={Contact} />
-            </div>
-          </div>
+          <Route
+            path="/"
+            render={() =>
+              !isUserAuthenticated ? <Redirect to="/login" /> : <PrivateRoute />
+            }
+          />
         </Switch>
       </Router>
     );
   }
 }
+
+const PrivateRoute = () => {
+  return (
+    <div className="wrapper">
+      <SideBar />
+      <Header />
+      <div className="content">
+        <Route exact path="/datatable" component={DataTable} />
+        <Route exact path="/contact" component={Contact} />
+        <Redirect to="/dashboard" />
+      </div>
+    </div>
+  );
+};
 
 export default App;

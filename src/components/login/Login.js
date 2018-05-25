@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { LinkContainer } from 'react-router-bootstrap';
-import Auth from '../../modules/Auth';
+import { inject, observer } from 'mobx-react';
 
+@inject('AuthStore')
+@observer
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +31,7 @@ class Login extends Component {
       }
     })
       .then(res => res.json())
-      .then(res => Auth.authenticateUser(res.id))
+      .then(res => this.props.AuthStore.authenticateUser(res.id))
       .catch(err => console.log(err.headers));
   }
   render() {
