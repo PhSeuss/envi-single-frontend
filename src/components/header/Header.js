@@ -1,5 +1,6 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
+import './Header.css';
 
 const Header = () => {
   return (
