@@ -15,32 +15,37 @@ const SideBar = () => {
 
         <div className="menu-list">
           <ul id="menu-content" className="menu-content collapse out">
-            <li>
-              <a href="#">
-                <i className="fa fa-desktop" /> So lieu thuc
-              </a>
-            </li>
+            <LinkContainer to="/dashboard">
+              <li>
+                <a>
+                  <i className="fa fa-desktop" /> So lieu thuc
+                </a>
+              </li>
+            </LinkContainer>
             <LinkContainer to="/datatable">
               <li>
-                <a href="#">
+                <a>
                   <i className="fa fa-table" /> Bang du lieu
                 </a>
               </li>
             </LinkContainer>
-            <li>
-              <a href="#">
-                <i className="fa fa-pie-chart" /> Bieu do
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i className="fa fa-gear" /> Cai dat
-              </a>
-            </li>
-
+            <LinkContainer to="/chart">
+              <li>
+                <a>
+                  <i className="fa fa-pie-chart" /> Bieu do
+                </a>
+              </li>
+            </LinkContainer>
+            <LinkContainer to="/setting">
+              <li>
+                <a>
+                  <i className="fa fa-gear" /> Cai dat
+                </a>
+              </li>
+            </LinkContainer>
             <LinkContainer to="/contact">
               <li>
-                <a href="#">
+                <a>
                   <i className="fa fa-envelope" /> Lien he
                 </a>
               </li>
