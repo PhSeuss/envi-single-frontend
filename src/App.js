@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/header/Header';
 import SideBar from './components/sidebar/SideBar';
+import DashBoard from './components/dashboard/DashBoard';
 import Contact from './components/contact/Contact';
 import Login from './components/login/Login';
 import DataTable from './components/datatable/DataTable';
@@ -45,7 +46,8 @@ const PrivateRoute = () => {
     <div className="wrapper">
       <SideBar />
       <Header />
-      <div className="content">
+      <div className="container">
+        <Route exact path="/dashboard" component={DashBoard} />
         <Route exact path="/datatable" component={DataTable} />
         <Route exact path="/contact" component={Contact} />
         <Redirect to="/dashboard" />
